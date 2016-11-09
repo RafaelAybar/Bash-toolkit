@@ -1,4 +1,13 @@
 # Bash-toolkit
-Esta proyecto esá destinado a sysadmin.
-Sus principales características son: Copias de seguridad, administración de usuarios, automatización de tareas, instalación de isos en pendrive... etc
-Está programado en bash, aunque no descarto añadir funcionalidades con python3
+Herramientas para sysadmin con las siguientes funcionalidades:
+
+*    Copias de seguridad y automatización de tareas.
+*    Conexión a bases de datos  MySQL (python 3.5.2).
+*    Gestión de usuarios y permisos.
+*    Conexiones remotas.
+*    Gestión de discos.
+*    Instalación de sistemas operativos en pendrive.
+*    Monitorización de procesos.
+*    Servicios DNS, DHCP, emisión de certificados, y combrobación del estado de los mismos
+*    Conexión a base de datos MYSQL (python 3.5.2).
+
