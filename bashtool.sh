@@ -28,5 +28,4 @@ EOF
         exit;;
     *) echo "Introduce una opción válida"
   esac
-		#case es un bucle que nos permite comrpobar directamente las opciones
 done
