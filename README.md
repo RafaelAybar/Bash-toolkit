@@ -1,5 +1,5 @@
 # Bash-toolkit
-Herramientas para sysadmin con las siguientes funcionalidades:
+Herramientas para sysadmin con las siguientes funcionalidades **Ejecutar siempre con permisos de administración (preferiblemente sudo -s):**
 
 *    Copias de seguridad y automatización de tareas.
 *    Conexión a bases de datos  MySQL (python 3.5.2).
