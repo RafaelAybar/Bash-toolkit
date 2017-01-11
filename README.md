@@ -9,5 +9,4 @@ Herramientas para sysadmin con las siguientes funcionalidades **Ejecutar siempre
 *    Instalación de sistemas operativos en pendrive.
 *    Monitorización de procesos.
 *    Servicios DNS, DHCP, emisión de certificados, y combrobación del estado de los mismos
-*    Conexión a base de datos MYSQL (python 3.5.2).
 
