@@ -27,5 +27,5 @@ EOF
         6) echo "En progreso" ;;
         7) echo "Adios";;
         *) echo "Escoge un parámetro válido" ;;
-    done
     esac
+    done
