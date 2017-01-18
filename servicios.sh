@@ -18,10 +18,14 @@ EOF
 
             sudo apt install apache2 libapache2-mod-php php7.0-mbstring php-gettext mysql-server mysql-client libmysqlclient-dev;
             echo "Recuerda modificar los permisos de /var/www/html"
+            ;;
         2) sudo apt install bind9;
-        3) echo "En progreso"
-        4) echo "En progreso"
-        5) echo "En progreso"
-        6) echo "En progreso"
-        7) echo "Adios"
-        *) echo "Escoge un parámetro válido"
+        ;;
+        3) echo "En progreso" ;;
+        4) echo "En progreso" ;;
+        5) echo "En progreso" ;;
+        6) echo "En progreso" ;;
+        7) echo "Adios";;
+        *) echo "Escoge un parámetro válido" ;;
+    done
+    esac
