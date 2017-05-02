@@ -42,6 +42,8 @@ else
                         echo"network $red" >> /etc/network/interfaces
                         echo"dns-nameservers $dnsnameserver" >> /etc/network/interfaces
                         echo"search $search" >> /etc/network/interfaces
+                        echo "Configuración acabada"
+                        exit
                     fi
                 fi
             fi
