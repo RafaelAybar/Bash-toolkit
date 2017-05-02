@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo -s
 echo "Bienvenido al configurador de red automático"
 echo "Selecciona la red en el la que estás 10.0.0.0 por ejemplo"
 read red
@@ -34,13 +35,13 @@ else
                         then
                             echo "Debes introducir el dominio"
                     else
-                        sudo echo"auto enp0s3" >> /etc/network/interfaces
-                        sudo echo"iface enp0s3 static" >> /etc/network/interfaces
-                        sudo echo"addres $ip" >> /etc/network/interfaces
-                        sudo echo"netmask $netmask" >> /etc/network/interfaces
-                        sudo echo"network $red" >> /etc/network/interfaces
-                        sudo echo"dns-nameservers $dnsnameserver" >> /etc/network/interfaces
-                        sudo echo"search $search" >> /etc/network/interfaces
+                        echo"auto enp0s3" >> /etc/network/interfaces
+                        echo"iface enp0s3 static" >> /etc/network/interfaces
+                        echo"addres $ip" >> /etc/network/interfaces
+                        echo"netmask $netmask" >> /etc/network/interfaces
+                        echo"network $red" >> /etc/network/interfaces
+                        echo"dns-nameservers $dnsnameserver" >> /etc/network/interfaces
+                        echo"search $search" >> /etc/network/interfaces
                     fi
                 fi
             fi
