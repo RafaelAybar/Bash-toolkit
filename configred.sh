@@ -30,7 +30,7 @@ else
                 else
                     echo "Introduce el dominio"
                     read search
-                    if [ -z $search]
+                    if [ -z $search ]
                         then
                             echo "Debes introducir el dominio"
                     else
