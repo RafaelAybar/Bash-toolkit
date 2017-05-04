@@ -43,7 +43,7 @@ else
                          else
                             echo "auto enp0s3" >> /etc/network/interfaces
                             echo "iface enp0s3 inet static" >> /etc/network/interfaces
-                            echo "addres $ip" >> /etc/network/interfaces
+                            echo "address $ip" >> /etc/network/interfaces
                             echo "netmask $netmask" >> /etc/network/interfaces
                             echo "network $red" >> /etc/network/interfaces
                             echo "gateway $puerta" >> /etc/network/interfaces
