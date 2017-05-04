@@ -42,7 +42,7 @@ else
                                 echo "Debes introducir una puerta de enlace"
                          else
                             echo "auto enp0s3" >> /etc/network/interfaces
-                            echo "iface enp0s3 static" >> /etc/network/interfaces
+                            echo "iface enp0s3 inet static" >> /etc/network/interfaces
                             echo "addres $ip" >> /etc/network/interfaces
                             echo "netmask $netmask" >> /etc/network/interfaces
                             echo "network $red" >> /etc/network/interfaces
