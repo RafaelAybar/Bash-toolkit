@@ -46,7 +46,7 @@ else
                             echo "addres $ip" >> /etc/network/interfaces
                             echo "netmask $netmask" >> /etc/network/interfaces
                             echo "network $red" >> /etc/network/interfaces
-                            echo "gateway $puerta"
+                            echo "gateway $puerta" >> /etc/network/interfaces
                             echo "dns-nameservers $dnsnameserver" >> /etc/network/interfaces
                             echo "search $search" >> /etc/network/interfaces
                             echo "Configuración acabada"
