@@ -1,4 +1,4 @@
-##!/bin/bash
+#!/bin/bash
 echo "Bienvenido al configurador de red automático"
 echo "Selecciona la red en el la que estás 10.0.0.0 por ejemplo"
     read red
