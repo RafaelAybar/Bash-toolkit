@@ -35,7 +35,9 @@ else
             if [ -n "$respuestaa" ]
                 then
                     echo "Procedemos a modificar el fichero /etc/resolv.conf"
-                    sed -i.back "1s/^/ $ip   $HOSTNAME.$search  $HOSTNAME\n/" /etc/resolv.conf
+                    #almacenamos la salida de un comando en la variable
+                    hostname=$(hostname -f)
+                    sed -i.back "1s/^/ $ip   $hostname.$search  $hostname\n/" /etc/resolv.conf
                     echo "Se ha generado un fichero resolv.conf.bak de copia de seguridad"
                     echo "¿Quieres reiniciar la tajeta de red para aplicar los cambios? pulsa una tecla para confirmar"
                     read respuesta
