@@ -1,4 +1,4 @@
-#!/bin/bash
+##!/bin/bash
 echo "Bienvenido al configurador de red automático"
 echo "Selecciona la red en el la que estás 10.0.0.0 por ejemplo"
     read red
@@ -34,17 +34,16 @@ else
         read respuestaa
             if [ -n "$respuestaa" ]
                 then
-                    echo "Procedemos a modificar el fichero /etc/resolv.conf"
+                    echo "Procedemos a modificar el fichero /etc/hosts"
                     #almacenamos la salida de un comando en la variable
                     hostname=$(hostname -f)
-                    sed -i.back "1s/^/ $ip   $hostname.$search  $hostname\n/" /etc/resolv.conf
+                    sed -i.back "1s/^/ $ip   $hostname.$search  $hostname\n/" /etc/hosts
                     echo "Se ha generado un fichero resolv.conf.bak de copia de seguridad"
-                    echo "¿Quieres reiniciar la tajeta de red para aplicar los cambios? pulsa una tecla para confirmar"
+                    echo "¿Quieres reiniciar los servicios de red para aplicar los cambios? pulsa una tecla para confirmar"
                     read respuesta
                     if [ -n "$respuesta" ] 
                         then
-                            ifdown enp0s3
-                            ifup enp0s3
+                            service networking reload
                             echo "se ha reiniciado la tarjeta de red"
                     elif [ -z "$respuesta" ]
                         then
@@ -52,7 +51,7 @@ else
                                 exit
                     fi
                 else
-                    echo "Introduce una respuesta válida"
+                    echo "Hasta luego"
                     exit
             fi
 fi
