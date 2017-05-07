@@ -30,7 +30,7 @@ else
     echo "dns-search $search" >> /etc/network/interfaces
     echo "Configuración acabada"
 
-    echo "¿Quieres modificar ahora el fichero resolv.conf? Pulsa una tecla"
+    echo "¿Quieres modificar ahora el fichero hosts? Pulsa una tecla"
         read respuestaa
             if [ -n "$respuestaa" ]
                 then
