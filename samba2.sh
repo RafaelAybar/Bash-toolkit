@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "ACUERDATE DE BORRAR EL SERVIDOR DNS EXTERNO EN /etc/network/interfaces para que funcione en local"
+sleep 10
 echo "Comprobamos los servicios de hora"
     sudo service ntp stop
     sudo ntpdate -B 0.ubuntu.pool.ntp.org
@@ -12,7 +14,7 @@ echo "Configuramos kerberos"
 sudo mv /etc/krb5.conf /etc/krb5.conf.orig
 sudo ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf
 echo "Iniciamos sesión en Kerberos para comprobar"
-echo "Introduce tu dominio"
+echo "Introduce tu dominio EN MAYÚSCULAS"
 read dominio
 if [ -n "$dominio" ]
     then
