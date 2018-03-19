@@ -23,7 +23,7 @@ else
             cp /etc/network/interfaces /etc/network/interfaces2
 	#Comprobamos si la interfaz introducida ya existe en el fichero, para no duplicarla
 	interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
-	if [ $interfichero == $interfaz ]
+	if [ $interfichero != $interfaz ]
 		then
     echo "auto $interfaz" >> /etc/network/interfaces
     echo "iface $interfaz inet static" >> /etc/network/interfaces
@@ -34,6 +34,7 @@ else
     echo "dns-nameservers $dnsname" >> /etc/network/interfaces
     echo "dns-search $search" >> /etc/network/interfaces
 		else
+			sed -i 's/dhcp/static/g'/etc/network/interfaces
 			echo "address $ip" >> /etc/network/interfaces
 			echo "netmask $netmask" >> /etc/network/interfaces
 			echo "network $red" >> /etc/network/interfaces
