@@ -34,7 +34,7 @@ else
     echo "dns-nameservers $dnsname" >> /etc/network/interfaces
     echo "dns-search $search" >> /etc/network/interfaces
 		else
-			sed -i 's/dhcp/static/g'/etc/network/interfaces
+			sed -i 's/dhcp/static/g' /etc/network/interfaces
 			echo "address $ip" >> /etc/network/interfaces
 			echo "netmask $netmask" >> /etc/network/interfaces
 			echo "network $red" >> /etc/network/interfaces
@@ -44,7 +44,6 @@ else
 	fi
 
     echo "Configuración acabada"
-
     echo "Recuerde modificar el los ficheros hosts y resolv.conf si fuera necesario"
       service networking restart
     echo "se ha reiniciado la tarjeta de red"
