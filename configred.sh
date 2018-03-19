@@ -22,7 +22,7 @@ else
     echo "Hacemos copia de seguirdad (el fichero será interfaces2)"
             cp /etc/network/interfaces /etc/network/interfaces2
 	#Comprobamos si la interfaz introducida ya existe en el fichero, para no duplicarla
-	interfichero = $(ip a | grep $interfaz | awk -F: '{ print $2 }')
+	interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
 	if [ $interfichero == $interfaz ]
 		then
     echo "auto $interfaz" >> /etc/network/interfaces
@@ -37,7 +37,7 @@ else
 			echo "address $ip" >> /etc/network/interfaces
 			echo "netmask $netmask" >> /etc/network/interfaces
 			echo "network $red" >> /etc/network/interfaces
-			echo "gateway $gateway" >> /etc/network/interfaces
+			echo "gateway $puerta" >> /etc/network/interfaces
 			echo "dns-nameservers $dnsname" >> /etc/network/interfaces
 			echo "dns-search $search" >> /etc/network/interfaces
 	fi
@@ -48,9 +48,4 @@ else
       service networking restart
     echo "se ha reiniciado la tarjeta de red"
         exit
-                    fi
-                else
-                    echo "Hasta luego"
-                    exit
-            fi
-fi
+ fi
