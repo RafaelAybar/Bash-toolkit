@@ -21,19 +21,19 @@ EOF
 	2) sh copiaseg.sh;;
 	3) sh gestdisc.sh;;
 	4) sh isos.sh;;
-	5) echo enprogreso;;
+	5) echo "En progreso";;
 	6) sh remoto.sh;;
 	7) sh servicios.sh;;
 	8) sh monit.sh;;
 	9)echo "Introduce los parámetros para configurar la tarjeta de red primaria en este orden"
 		echo "1º tarjeta de red 2º red 3º IP de la máquina 4º puerta de enlace 5º máscara de red 6º servidores DNS 7º dominio"
 	read parametros
-	if [ -z $parametros ]
+	if [ -z "$parametros" ]
 		then
 			echo "Debes introducir los parámetros que sean necesarios"
 			exit
 	else
-		./configred.sh $parametros
+		./configred.sh "$parametros"
 	fi
 		;;
 	10) echo "Hasta luego"
