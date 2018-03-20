@@ -14,14 +14,9 @@ echo "7º dominio"
 	dnsname=$6
 	search=$7
  # El parámetro -z comprueba si la variable está vacía y -n si está completa
-if [ -z  $interfaz ] || [ -z $red ] || [ -z $ip ] || [ -z $netmask ] || [ -z $dnsname ] || [ -z "$search" ] || [ -z $puerta ]
-    then
-        echo "Debes introducir todos los parámetros"
-        exit
-else
     echo "Hacemos copia de seguirdad (el fichero será interfaces2)"
             cp /etc/network/interfaces /etc/network/interfaces2
-	#Comprobamos si la interfaz introducida ya existe en el fichero, para no duplicarla
+	#Si no existe y  es primaria
 	interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
 	if [ $interfichero != $interfaz ]
 		then
@@ -34,6 +29,7 @@ else
     echo "dns-nameservers $dnsname" >> /etc/network/interfaces
     echo "dns-search $search" >> /etc/network/interfaces
 		else
+			#Si existe y es primaria
 			sed -i 's/dhcp/static/g' /etc/network/interfaces
 			echo "address $ip" >> /etc/network/interfaces
 			echo "netmask $netmask" >> /etc/network/interfaces
@@ -48,4 +44,3 @@ else
       service networking restart
     echo "se ha reiniciado la tarjeta de red"
         exit
- fi
