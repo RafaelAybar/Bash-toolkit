@@ -18,7 +18,7 @@ echo "7º dominio"
             cp /etc/network/interfaces /etc/network/interfaces2
 	#Si no existe y  es primaria
 	interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
-	if [ $interfichero != $interfaz ]
+	if [ "$interfichero" != "$interfaz" ]
 		then
     echo "auto $interfaz" >> /etc/network/interfaces
     echo "iface $interfaz inet static" >> /etc/network/interfaces
