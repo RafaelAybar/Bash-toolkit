@@ -26,5 +26,8 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 -    Servicios DNS, DHCP, emisión de certificados, y combrobación del estado de los mismos
 
 ### Requerimientos:
+* Ubuntu server 16.04.4 LTS
 * Bash
-* Python 3.5 o superior
+* MySQL 5.7 o superior (opcional)
+* Python 3.5 o superior (opcional)
+* `cryptsetup` (sólo para las opciones de cifrado)
