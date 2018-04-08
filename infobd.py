@@ -19,8 +19,8 @@ if len(usuariobd) == 0 or len(contra)==0 or len(host) == 0 or len(puerto) == 0:
     exit()
 #Probamos la conexión
 #https://stackoverflow.com/questions/22689895/list-of-databases-in-sqlalchemy
-engine = create_engine("mysql://"+usuariobd+":"+contra+"@"+host+":"+puerto+"/mysql")
+engine = create_engine('mysql://'+usuariobd+':'+contra+'@'+host+':'+puerto)
 #Obtenemos info de las BDS disponibles
 consulta = engine.execute('SHOW DATABASES')
 listatablas = consulta.fetchall()
-print('listatablas')
+print(listatablas)
