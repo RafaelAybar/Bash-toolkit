@@ -9,15 +9,18 @@ contra = input()
 print("Introduzca el host")
 host = input().strip()
 print("Introduzca el puerto a conectar (3306)")
+puerto = str(input())
 #Forzamos que el número que llega es un entero https://stackoverflow.com/questions/5424716/how-to-check-if-string-input-is-a-number
-puertocon = abs(int(input()))
-print("Se va a realizar la conexión con el usuario {usuariobd}@{host}, al puerto {puertocon}")
+print("Se va a realizar la conexión con el usuario "+ usuariobd + "@" + host+ " con el puerto "+puerto)
 
 #comprobamos que no llegan valores vacíos
-if len(str(usuariobd)) == 0:
+if len(usuariobd) == 0 or len(contra)==0 or len(host) == 0 or len(puerto) == 0:
     print("Debes introducir todos los datos")
     exit()
 #Probamos la conexión
-#mysql+pymysql://<username>:<password>@<host>/<dbname>[?<options>]
-
-engine = create_engine("mysql+pymysql://{usuariobd}:{contra}@{host}")
+#https://stackoverflow.com/questions/22689895/list-of-databases-in-sqlalchemy
+engine = create_engine("mysql://"+usuariobd+":"+contra+"@"+host+":"+puerto+"/mysql")
+#Obtenemos info de las BDS disponibles
+consulta = engine.execute('SHOW DATABASES')
+listatablas = consulta.fetchall()
+print('listatablas')
