@@ -5,7 +5,6 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 -    Copias de seguridad y automatización de tareas.
 -    Obtención de información de base de datos MySQL.
 -    Gestión de usuarios y permisos.
--    Conexiones remotas.
 -    Gestión de discos.
     ADVERTENCIA: No me hago responsable de la pérdida de datos ni de las consecuencias que pueda acarrear el mal uso de estos scripts.
     - Incluye:
