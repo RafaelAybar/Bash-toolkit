@@ -21,6 +21,19 @@ if len(usuariobd) == 0 or len(contra)==0 or len(host) == 0 or len(puerto) == 0:
 #https://stackoverflow.com/questions/22689895/list-of-databases-in-sqlalchemy
 engine = create_engine('mysql://'+usuariobd+':'+contra+'@'+host+':'+puerto)
 #Obtenemos info de las BDS disponibles
-consulta = engine.execute('SHOW DATABASES')
-listatablas = consulta.fetchall()
+insp = inspect(engine)
+listatablas = insp.get_schema_names()
 print(listatablas)
+
+print("Si usted cree que faltan bases de datos por obtener, puede ser que el usuario")
+print("introducido no tenga suficientos permisos para obenerlas")
+
+print ("Introduce la base de datos de la que quieres extraer la información")
+bdabuscar = input().strip()
+if bdabuscar in listatablas:
+    datos = engine.execute('SHOW CREATE DATABASE '+bdabuscar)
+    datosbd = datos.fetchall()
+    print (datosbd)
+else:
+    print("La base de datos que has introducido no se ha detectado")
+    exit
