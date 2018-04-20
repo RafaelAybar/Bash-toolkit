@@ -6,7 +6,7 @@ do
 1   Instalación LAMPP.
 2   Instalación de servidor DNS (bind9)
 3   Instalación de servidor DHCP
-4   Instalación de servidor ftp (ProFTPD)
+4   Generar certificados SSL/TSL
 6   Salir
 EOF
     read respuesta
@@ -56,15 +56,40 @@ EOF
                     exit
             else
                 echo "Se va a crear el archivo de zona directa vacío"
-                cp /etc/bind/db.local /etc/bind/db.$nombredom
+                sudo cp /etc/bind/db.local /etc/bind/db.$nombredom
                 echo "Se va a crear el archivo de zona inversa"
                 echo "zone \"$nombredom\" {" >> /etc/bind/named.conf.local
-                echo "Seleccione el tipo  de zona (maseter o slave)"
+                echo "Seleccione el tipo  de zona (master ó slave)"
                 read tipozona
                 if [ "$tipozona" == "master" ] || [ "$tipozona" == "slave" ]
                     then
-                        echo "type $tipozona;" >> /etc/bind/named.conf.local
-
+                        echo "  type $tipozona;" >> /etc/bind/named.conf.local
+                        echo "  file \"/etc/bind/db.$nombredom\";" >> /etc/bind/named.conf.local
+                        echo "};" >> /etc/bind/named.conf.local
+                        cat /etc/bind/named.conf.local
+                        echo "Se va a proceder a configurar la zona inversa"
+                        echo "Introduzca la ip de esta forma: 1.168.192"
+                        read ipinversa
+                        if [ -z ipinversa ]
+                            then
+                                echo "Debes introducir una zona inversa"
+                                exit
+                            else
+                            cp /etc/bind/db.127 /etc/db.$ipinversa.rev
+                            echo "zone \"$ipinversa.in-addr.arpa\" {"
+                            echo "Introduce el tipo de zona inversa (master ó slave)"
+                            read tipozonainv
+                            if [ "$tipozonainv" == "master" ] || [ "$tipozonainv" == "slave" ]
+                                then
+                                    echo "  type $tipozonainv;" >> /etc/bind/named.conf.local
+                                    echo "  file \"/etc/bind/db.$ipinversa.rev\";" >> /etc/bind/named.conf.local
+                                    echo "};" >> /etc/bind/named.conf.local
+                                    cat /etc/bind/named.conf.local
+                                else
+                                    echo "Introduce un tipo de zona válido"
+                                    exit
+                            fi
+                        fi
                 else
                     echo "Introduce una respuesta válida"
                     exit
