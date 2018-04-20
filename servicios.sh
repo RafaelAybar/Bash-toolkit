@@ -7,7 +7,7 @@ do
 2   Instalación de servidor DNS (bind9)
 3   Instalación de servidor DHCP
 4   Generar certificados SSL/TSL
-6   Salir
+5   Salir
 EOF
     read respuesta
     
@@ -98,7 +98,8 @@ EOF
         ;;
         3) echo "En progreso" ;;
         4) echo "En progreso" ;;
-        5) echo "Adios";;
+        5) echo "Adios"
+            exit;;
         *) echo "Escoge un parámetro válido" ;;
     esac
     done
