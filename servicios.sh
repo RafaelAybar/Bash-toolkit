@@ -61,8 +61,8 @@ EOF
                 echo "zone \"$nombredom\" {" >> /etc/bind/named.conf.local
                 echo "Seleccione el tipo  de zona (master ó slave)"
                 read tipozona
-                if [ "$tipozona" == "master" ] || [ "$tipozona" == "slave" ]
-                    then
+                if [ "$tipozona" = "master" ] || [ "$tipozona" = "slave" ] 
+                then
                         echo "  type $tipozona;" >> /etc/bind/named.conf.local
                         echo "  file \"/etc/bind/db.$nombredom\";" >> /etc/bind/named.conf.local
                         echo "};" >> /etc/bind/named.conf.local
@@ -71,7 +71,7 @@ EOF
                         echo "Introduzca la ip de esta forma: 1.168.192"
                         read ipinversa
                         if [ -z ipinversa ]
-                            then
+                        then
                                 echo "Debes introducir una zona inversa"
                                 exit
                             else
@@ -79,8 +79,8 @@ EOF
                             echo "zone \"$ipinversa.in-addr.arpa\" {"
                             echo "Introduce el tipo de zona inversa (master ó slave)"
                             read tipozonainv
-                            if [ "$tipozonainv" == "master" ] || [ "$tipozonainv" == "slave" ]
-                                then
+                            if [ "$tipozonainv" = "master" ] || [ "$tipozonainv" = "slave" ]
+                            then
                                     echo "  type $tipozonainv;" >> /etc/bind/named.conf.local
                                     echo "  file \"/etc/bind/db.$ipinversa.rev\";" >> /etc/bind/named.conf.local
                                     echo "};" >> /etc/bind/named.conf.local
