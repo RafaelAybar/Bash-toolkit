@@ -76,7 +76,7 @@ EOF
                                 exit
                             else
                             cp /etc/bind/db.127 /etc/db.$ipinversa.rev
-                            echo "zone \"$ipinversa.in-addr.arpa\" {"
+                            echo "zone \"$ipinversa.in-addr.arpa\" {" >> /etc/bind/named.conf.local
                             echo "Introduce el tipo de zona inversa (master ó slave)"
                             read tipozonainv
                             if [ "$tipozonainv" = "master" ] || [ "$tipozonainv" = "slave" ]
