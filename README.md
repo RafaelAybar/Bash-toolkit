@@ -22,7 +22,7 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
         Ejemplo:
         ./configred.sh enp0s3 192.168.209.0 192.168.209.45 192.168.209.1 255.255.255.0
 
--    Servicios DNS, DHCP, emisión de certificados, y combrobación del estado de los mismos
+-   Servicios DNS, DHCP, dominio Samba y unión de clientes Linux (Ubuntu)
 
 ### Requerimientos:
 * `Ubuntu server 16.04.4 LTS`
