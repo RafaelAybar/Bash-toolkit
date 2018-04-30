@@ -75,7 +75,7 @@ EOF
                                 echo "Debes introducir una zona inversa"
                                 exit
                             else
-                            sudo cp /etc/bind/db.127 /etc/db.$ipinversa.rev
+                            sudo cp /etc/bind/db.127 /etc/bind/db.$ipinversa.rev
                             echo "zone \"$ipinversa.in-addr.arpa\" {" >> /etc/bind/named.conf.local
                             echo "Introduce el tipo de zona inversa (master ó slave)"
                             read tipozonainv
