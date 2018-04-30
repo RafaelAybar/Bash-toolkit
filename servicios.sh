@@ -96,10 +96,10 @@ EOF
                                                     echo "Debes introducir los reenviadores"
                                                     exit
                                             else
-                                                #Descomentamos las líneas https://es.stackoverflow.com/questions/160392/quitar-car%c3%a1cter-especiales-en-l%c3%adneas-concretas-con-sed/160396#160396
-                                                sudo sed '13, 15 s/\/\///' /etc/bind/named.conf.options
+                                                #Descomentamos las líneas https://egráficos.stackoverflow.com/questions/160392/quitar-car%c3%a1cter-especiales-en-l%c3%adneas-concretas-con-sed/160396#160396
+                                                sudo sed -i '13, 15 s/\/\///' /etc/bind/named.conf.options
                                                 #Introducimos los reenviadores en el fichero
-                                                sudo sed "s/0.0.0.0/$reenv/" /etc/bind/named.conf.options
+                                                sudo sed -i "s/0.0.0.0/$reenv/" /etc/bind/named.conf.options
                                             fi
                                     elif [ "$respreenv" = "n" ]
                                         then 
