@@ -85,6 +85,29 @@ EOF
                                     echo "  file \"/etc/bind/db.$ipinversa.rev\";" >> /etc/bind/named.conf.local
                                     echo "};" >> /etc/bind/named.conf.local
                                     cat /etc/bind/named.conf.local
+                                    echo "¿Desea configurar los reenviadores? (s/n)"
+                                    read respreenv
+                                    if [ "$respreenv" = "s" ]
+                                        then
+                                            echo "Introduce los reenviadores (8.8.8.8) por ejemplo"
+                                            read reenv
+                                            if [ -z "$reenv" ]
+                                                then
+                                                    echo "Debes introducir los reenviadores"
+                                                    exit
+                                            else
+                                                #Descomentamos las líneas https://es.stackoverflow.com/questions/160392/quitar-car%c3%a1cter-especiales-en-l%c3%adneas-concretas-con-sed/160396#160396
+                                                sudo sed '13, 15 s/\/\///' /etc/bind/named.conf.options
+                                                #Introducimos los reenviadores en el fichero
+                                                sudo sed "s/0.0.0.0/$reenv/" /etc/bind/named.conf.options
+                                            fi
+                                    elif [ "$respreenv" = "n" ]
+                                        then 
+                                            echo "No has querido introduccir los reenviadores"
+                                    else
+                                        echo "Selecciona una opción válida"
+                                        exit
+                                    fi
                                 else
                                     echo "Introduce un tipo de zona válido"
                                     exit
