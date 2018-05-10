@@ -120,6 +120,6 @@ EOF
     ;;
     6) echo "Hasta luego"
         exit;;
-    *) echo "Debes escoger una opción válida.";;
+    *) echo "Debes escoger una opción válida";;
 esac
 done

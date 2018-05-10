@@ -3,7 +3,7 @@ while true
 do
         echo "Bienvenido al instalador de sistemas operativos en pendrive"
         echo "Indica dónde está la iso a intalar"
-        echo "Si quires salir pulsa la tecla p "
+        echo "Si quires salir pulsa la tecla p"
         read ruta
         if [ $ruta = "p" ]
         then

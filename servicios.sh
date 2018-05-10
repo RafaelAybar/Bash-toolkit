@@ -100,6 +100,23 @@ EOF
                                                 sudo sed -i '13, 15 s/\/\///' /etc/bind/named.conf.options
                                                 #Introducimos los reenviadores en el fichero
                                                 sudo sed -i "s/0.0.0.0/$reenv/" /etc/bind/named.conf.options
+                                                cat /etc/bind/named.conf.options
+                                                echo "Procedemos a configurar de forma básica los archivos de zona directa. Añada las zonas que estime oportunas"
+                                                echo "manualmente, así como el resto de parámetros esta configuración será igual para la zona inversa"
+                                                echo "Se añadirán registros A para el dominio"
+                                                sleep 5
+                                                sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$nombredom
+                                                sed -i "s/localhost/$nombredom/" /etc/bind/db.$nombredom
+                                                #optenemos la ip
+                                                ip=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
+                                                #añadimos la ip
+                                                sed -i "s/127.0.0.1/$ip" /etc/bind/db.$nombredom
+                                                cat /etc/bind/db.$nombredom
+                                                echo "Realizamos la misma tarea con la zona inversa"
+                                                sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
+                                                sed -i "s/localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
+                                                sed -i "s/1.0.0/$ipinversa" /etc/bind/db.$ipinversa.rev
+                                                
                                             fi
                                     elif [ "$respreenv" = "n" ]
                                         then 
