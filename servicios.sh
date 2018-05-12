@@ -115,7 +115,7 @@ EOF
                                                 echo "Realizamos la misma tarea con la zona inversa"
                                                 sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
                                                 sed -i "s/localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
-                                                sed -i "s/1.0.0/$ipinversa" /etc/bind/db.$ipinversa.rev
+                                                sed -i "s/1.0.0/$ipinversa/" /etc/bind/db.$ipinversa.rev
                                                 cat /etcbind/db.$ipinversa.rev
                                             fi
                                     elif [ "$respreenv" = "n" ]
