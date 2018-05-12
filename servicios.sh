@@ -110,13 +110,13 @@ EOF
                                                 #optenemos la ip
                                                 ip=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
                                                 #añadimos la ip
-                                                sed -i "s/127.0.0.1/$ip" /etc/bind/db.$nombredom
+                                                sed -i "s/127.0.0.1/$ip/" /etc/bind/db.$nombredom
                                                 cat /etc/bind/db.$nombredom
                                                 echo "Realizamos la misma tarea con la zona inversa"
                                                 sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
                                                 sed -i "s/localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
                                                 sed -i "s/1.0.0/$ipinversa/" /etc/bind/db.$ipinversa.rev
-                                                cat /etcbind/db.$ipinversa.rev
+                                                cat /etc/bind/db.$ipinversa.rev
                                             fi
                                     elif [ "$respreenv" = "n" ]
                                         then 
