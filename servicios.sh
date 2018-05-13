@@ -122,7 +122,13 @@ EOF
                                                 sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$nombredom
                                                 sed -i "s/localhost/$nombredom/" /etc/bind/db.$nombredom
                                                 #optenemos la ip
-                                                ip=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
+                                                echo "introduce la ip"
+                                                read ip
+                                                if [ -z $ip ]
+                                                    then
+                                                        echo "Es oligatorio introducir la ip"
+                                                        exit
+                                                fi
                                                 #añadimos la ip
                                                 sed -i "s/127.0.0.1/$ip/" /etc/bind/db.$nombredom
                                                 cat /etc/bind/db.$nombredom
