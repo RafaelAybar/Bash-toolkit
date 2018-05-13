@@ -50,13 +50,6 @@ EOF
             sudo cp /etc/bind/named.conf.local /etc/bind/named.conf.local.bak
             echo "Introduce el nombre del dominio"
             read nombredom
-            echo "Introduce la interfaz de red, por ejemplo enp0s3"
-            read interfaz
-            if [ -z $interfaz ]
-                then
-                    echo "Es obligatorio introducir la interfaz"
-                    exit
-            fi
             if [ -z "$nombredom" ]
                 then
                     echo "Debes introducir algún nombre"
@@ -131,6 +124,7 @@ EOF
                                                 fi
                                                 #añadimos la ip
                                                 sed -i "s/127.0.0.1/$ip/" /etc/bind/db.$nombredom
+                                                sed -i "13 s/@/$nombredom./" /etc/bind/db.$nombredom
                                                 cat /etc/bind/db.$nombredom
                                                 echo "Realizamos la misma tarea con la zona inversa"
                                                 sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
