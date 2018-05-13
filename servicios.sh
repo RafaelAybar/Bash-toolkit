@@ -50,6 +50,13 @@ EOF
             sudo cp /etc/bind/named.conf.local /etc/bind/named.conf.local.bak
             echo "Introduce el nombre del dominio"
             read nombredom
+            echo "Introduce la interfaz de red, por ejemplo enp0s3"
+            read interfaz
+            if [ -z $interfaz ]
+                then
+                    echo "Es obligatorio introducir la interfaz"
+                    exit
+            fi
             if [ -z "$nombredom" ]
                 then
                     echo "Debes introducir algún nombre"
@@ -95,13 +102,20 @@ EOF
                                                 then
                                                     echo "Debes introducir los reenviadores"
                                                     exit
-                                            else
-                                                #Descomentamos las líneas https://egráficos.stackoverflow.com/questions/160392/quitar-car%c3%a1cter-especiales-en-l%c3%adneas-concretas-con-sed/160396#160396
+                                            fi
+                                            #Descomentamos las líneas https://egráficos.stackoverflow.com/questions/160392/quitar-car%c3%a1cter-especiales-en-l%c3%adneas-concretas-con-sed/160396#160396
                                                 sudo sed -i '13, 15 s/\/\///' /etc/bind/named.conf.options
                                                 #Introducimos los reenviadores en el fichero
                                                 sudo sed -i "s/0.0.0.0/$reenv/" /etc/bind/named.conf.options
                                                 cat /etc/bind/named.conf.options
-                                                echo "Procedemos a configurar de forma básica los archivos de zona directa. Añada las zonas que estime oportunas"
+                                    elif [ "$respreenv" = "n" ]
+                                        then 
+                                            echo "No has querido introduccir los reenviadores"
+                                    else
+                                        echo "Selecciona una opción válida"
+                                        exit
+                                    fi
+                                    echo "Procedemos a configurar de forma básica los archivos de zona directa. Añada las zonas que estime oportunas"
                                                 echo "manualmente, así como el resto de parámetros esta configuración será igual para la zona inversa"
                                                 echo "Se añadirán registros A para el dominio"
                                                 sleep 5
@@ -117,14 +131,6 @@ EOF
                                                 sed -i "s/localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
                                                 sed -i "s/1.0.0/$ipinversa/" /etc/bind/db.$ipinversa.rev
                                                 cat /etc/bind/db.$ipinversa.rev
-                                            fi
-                                    elif [ "$respreenv" = "n" ]
-                                        then 
-                                            echo "No has querido introduccir los reenviadores"
-                                    else
-                                        echo "Selecciona una opción válida"
-                                        exit
-                                    fi
                                 else
                                     echo "Introduce un tipo de zona válido"
                                     exit
