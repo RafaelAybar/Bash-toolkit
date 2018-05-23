@@ -45,7 +45,8 @@ EOF
             fi
             echo "Configuración finalizada"
             ;;
-        2) sudo apt install bind9 bind9utils bind9-doc;
+        2)  echo "Se va a instarlar bind9"
+            sudo apt install bind9 bind9utils bind9-doc;
             echo "Creamos una copia del archivo named.conf.local llamado named.conf.local.bak"
             sudo cp /etc/bind/named.conf.local /etc/bind/named.conf.local.bak
             echo "Introduce el nombre del dominio"
@@ -142,7 +143,44 @@ EOF
                 fi
             fi
         ;;
-        3) echo "En progreso" ;;
+        3) echo "Se va a instalar el servidor dhcp"
+        sudo apt install isc-dhcp-server
+        echo "Esta es la lista de las interfaces "
+        ip a | grep "en" | awk -F: '{ print $2 }'
+        echo "Selecciona la interfaz de red"
+        read interfazred
+        echo "Introduce la red"
+        read reddhcp
+        echo "Introduce la máscara de red"
+        read reddmask
+        echo "Introduce la puerta de enlace"
+        read gw
+        echo "Introduce la dirección IP inicial del ámbito"
+        read ipinicial
+        echo "Introduce la dirección IP final del ámbito"
+        read ipfinal>> /etc/dhcp/dhcp.conf>> /etc/dhcp/dhcp.conf
+        echo "Introduce el tiempo de concesión por defecto en segundos"
+        read tconces
+        echo "Introduce el tiempo máximo para la concesión en segundos"
+        read tmax
+
+        if [ -z "$reddhcp" ] || [ -z "$tmax" ] || [ -z "$tconces" ] || [ -z "$interfazred" ] || [ -z "$gw" ] || [ -z "$reddmask" ] || [ -z "$ipinicial" ] || [ -z "$ipfinal" ]
+            then
+                echo "Debes introducir todo los datos"
+                exit
+        fi
+        echo "Se va a añadir la interfaz introducida al fichero /etc/default/isc-dhcp-server"
+        sudo sed -i "21 s/\"\"/\"$interfazred\"/" /etc/default/isc-dhcp-server
+        cat /etc/default/isc-dhcp-server
+        sleep 3
+        echo "default-lease-time $tconces;" >> /etc/dhcp/dhcp.conf
+        echo "max-lease-time $tmax;" >> /etc/dhcp/dhcp.conf
+        echo "Se van a configurar el archivo /etc/dhcp/dhcp.conf"
+        echo "subnet $reddhcp netmask $reddmask {" >> /etc/dhcp/dhcp.conf
+        echo "  range $ipinicial $ipfinal;" >> /etc/dhcp/dhcp.conf
+        echo "  option routers $gw;" >> /etc/dhcp/dhcp.conf
+        echo "}" >> /etc/dhcp/dhcp.conf
+                            ;;
         4) echo "En progreso" ;;
         5) echo "Adios"
             exit;;
