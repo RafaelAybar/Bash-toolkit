@@ -171,15 +171,19 @@ EOF
         fi
         echo "Se va a añadir la interfaz introducida al fichero /etc/default/isc-dhcp-server"
         sudo sed -i "21 s/\"\"/\"$interfazred\"/" /etc/default/isc-dhcp-server
+        sudo sed -i '10 s/#//' /etc/default/isc-dhcp-server
         cat /etc/default/isc-dhcp-server
-        sleep 3
+        sleep 5
+        
+        echo "Se va a configurar el archivo /etc/dhcp/dhcp.conf"
         echo "default-lease-time $tconces;" >> /etc/dhcp/dhcp.conf
         echo "max-lease-time $tmax;" >> /etc/dhcp/dhcp.conf
-        echo "Se van a configurar el archivo /etc/dhcp/dhcp.conf"
         echo "subnet $reddhcp netmask $reddmask {" >> /etc/dhcp/dhcp.conf
         echo "  range $ipinicial $ipfinal;" >> /etc/dhcp/dhcp.conf
         echo "  option routers $gw;" >> /etc/dhcp/dhcp.conf
         echo "}" >> /etc/dhcp/dhcp.conf
+        cat /etc/dhcp/dhcp.conf
+        
                             ;;
         4) echo "En progreso" ;;
         5) echo "Adios"
