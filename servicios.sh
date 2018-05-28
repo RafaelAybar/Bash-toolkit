@@ -201,7 +201,7 @@ EOF
             sudo openssl req -x509 -nodes -days $dias -newkey rsa:$sizersa -keyout $dirclave -out $dircerti
             echo "¿Desea crear un archivo Diffie-Hellman? s/n"
             read archivodh
-            if [ $archivodh="s" ]
+            if [ "$archivodh" = "s" ]
                 then
                     echo " Introduce la ruta absoluta del archivo a generar"
                     read ruadh
@@ -211,7 +211,7 @@ EOF
                             exit
                     fi
                    sudo openssl dhparam -out $ruadh $sizersa 
-            elif [ $archivodh="n" ]
+            elif [ "$archivodh" = "n" ]
                 then
                     echo "No ha querido generar el fichero"
                     exit
