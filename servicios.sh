@@ -183,9 +183,43 @@ EOF
         echo "  option routers $gw;" >> /etc/dhcp/dhcp.conf
         echo "}" >> /etc/dhcp/dhcp.conf
         cat /etc/dhcp/dhcp.conf
-        
                             ;;
-        4) echo "En progreso" ;;
+        4) echo "Se van a generar los certificados SSL"
+            echo "Introduce el total de días en los que el certificado será válido"
+            read dias
+            echo "Introduce el tamaño de la clave RSA (2 048 bits o superior)"
+            read sizersa
+            echo "Introduce la ruta absoluta donde se almacenará la clave (/etc/ssl/private/apache-selfsigned.key por ejemplo)"
+            read dirclave
+            echo "Introduce la ruta absoluta donde se almacenará el certificado"
+            read dircerti
+            if [ -z "$dias" ] || [ -z "$sizersa" ] || [ -z "$dirclave" ] || [ -z "$dircerti" ]
+                then
+                    echo "Introduce todos los parámetros"
+                    exit
+            fi
+            sudo openssl req -x509 -nodes -days $dias -newkey rsa:$sizersa -keyout $dirclave -out $dircerti
+            echo "¿Desea crear un archivo Diffie-Hellman? s/n"
+            read archivodh
+            if [ $archivodh="s" ]
+                then
+                    echo " Introduce la ruta absoluta del archivo a generar"
+                    read ruadh
+                    if [ -z "$ruadh" ]
+                        then
+                            echo "Debes introducir la ruta"
+                            exit
+                    fi
+                   sudo openssl dhparam -out $ruadh $sizersa 
+            elif [ $archivodh="n" ]
+                then
+                    echo "No ha querido generar el fichero"
+                    exit
+            else
+                echo "Introduce una opción válida"
+                exit
+            fi
+            ;;
         5) echo "Adios"
             exit;;
         *) echo "Escoge un parámetro válido" ;;
