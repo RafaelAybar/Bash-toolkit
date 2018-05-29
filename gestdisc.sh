@@ -27,32 +27,36 @@ EOF
                 then
                     echo "Introduce los datos correctamente"
             else
-                echo "Elija el algoritmo"
+                echo "Elija el tamaño en bits del algoritmo"
                     read algoritmo
-                echo "Elija el algorimmo hash"
+                echo "Elija el algorimmo hash, como luksFormat"
                     read algohash
-                if [ -z "$algoritmo" ] || [ -z "$algohash" ]
+                if [ -z "$algoritmo" ]
                     then
                         echo "Introduce todos los datos"
+                        exit
                 else
-                    echo "¿Desea hacer copia de seguridad de los datos? s/n"
-                    read confirmarcopiaseg
-                        if [ "$confirmarcopiaseg" != "s" ] || [ "$confirmarcopiaseg" != "n" ]
-                            then
-                                echo "Debes seleccionar una opción válida."
-                                exit
-                        elif [ "$confirmarcopiaseg" == "s" ]
-                            then
-                                echo "Selecciona la ruta del directorio/partición del que se quiere respaldar"
-                                read rutaorigbak
-                                if [ -d "$rutaorigbak" ]
-                                    then
-                                    echo "Selecciona la ruta de destino"
+                    echo "Es recomendable hacer una copia de seguridad de los datos previamente por que se va a realizar un borrado seguro de los datos"
+                    echo "¿De acuerdo? pulsa s para aceptar"
+                    read confirma
+                    if [ "$confirma" != "s" ]
+                        then
+                            echo "No has querido continuar"
+                            exit
+                    fi
+                    dd  if=/dev/urandom of=$candidato bs=4096
 
-                                fi
-                        fi
-                    echo "Se va a cifrar $candidato con algoritmo $algoritmo y algoritmo hash $algohash"
-                    
+                    echo "Se va a cifrar $candidato con el tamaño del algoritmo $algoritmo y LUKS"
+                    cryptsetup -v -s $algoritmo -y luksFormat $candidato
+                    #abrimos la partición y le asignamos un nombre a la partición cifrada
+                    echo "Asigna un nombre a la partción cifrada"
+                    read nomb
+                    if [ -z "$nomb" ]
+                        then
+                            echo "Debes darle un nombre"
+                            exit
+                    fi
+                            cryptsetup luksOpen $candidato $nomb
 
                 fi
             fi
