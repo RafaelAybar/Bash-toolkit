@@ -29,8 +29,7 @@ EOF
             else
                 echo "Elija el tamaño en bits del algoritmo"
                     read algoritmo
-                echo "Elija el algorimmo hash, como luksFormat"
-                    read algohash
+                echo "Se usarará luks"
                 if [ -z "$algoritmo" ]
                     then
                         echo "Introduce todos los datos"
@@ -56,8 +55,28 @@ EOF
                             echo "Debes darle un nombre"
                             exit
                     fi
-                            cryptsetup luksOpen $candidato $nomb
-
+                    cryptsetup luksOpen $candidato $nomb
+                    echo "Introduce el tipo de sistema de ficheros (ext4 por ejemplo)"
+                    read sistfichr
+                    if [ -z "$sistfichr" ]
+                        then
+                            echo "Debes introducir el sistema de ficheros"
+                            exit
+                    fi
+                    mkfs.$sistfichr /dev/mapper/$nomb
+                    #Añadimos la partición a crypttab, para ello debemos generar un UUID https://serverfault.com/questions/103359/how-to-create-a-uuid-in-bash
+                    uuid=$(uuidgen)
+                    echo "$nomb UUID=$uuid none lucks.timeout=180" >> /etc/crypttab
+                    #Editamos fstab para que se monte al inicio
+                    echo "¿Cómo quieres montar la partición? /loquesea por ejemplo"
+                    read ptomont
+                    if [ -z "$ptomont" ]
+                        then
+                            echo "Debes introducir todos los datos"
+                        exit
+                    fi
+                    sudo echo "/dev/mapper/$nomb $ptomont $sistfichr defaults.noatime.nodiratime 1 2" >> /etc/fstab
+                    mount /dev/mapper/$nomb $ptomont
                 fi
             fi
         ;;
