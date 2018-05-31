@@ -46,7 +46,7 @@ EOF
                     dd  if=/dev/urandom of=$candidato bs=4096
 
                     echo "Se va a cifrar $candidato con el tamaño del algoritmo $algoritmo y LUKS"
-                    cryptsetup -v -s $algoritmo -y luksFormat $candidato
+                    cryptsetup -v -s $algoritmo -q -y luksFormat $candidato
                     #abrimos la partición y le asignamos un nombre a la partición cifrada
                     echo "Asigna un nombre a la partción cifrada"
                     read nomb
