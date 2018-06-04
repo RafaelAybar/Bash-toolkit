@@ -11,7 +11,7 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
         - Obtención de información de los discos del sistema.
         - Cifrado de particiones/discos.
         - Borrado seguro de archivos (Esta opción puede degradar bastante su disco SSD debido a los procesos de sobreescritura).
-        - Creación y eliminación de particiones.
+        - Eliminación de particiones.
 
 -    Instalación de sistemas operativos en pendrive.
 -    Monitorización de procesos.
@@ -31,3 +31,6 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 * `Python 3.5 o superior` (sólo para obtener información de las bases de datos)
 * `python-mysqldb` y `python3-mysqldb` (conectores que permiten que python3 interactúe con mysql)
 * `cryptsetup` (sólo para las opciones de cifrado)
+### Agradecimientos
+* A todos los profesores del IES Al-Andalus
+* A @almuhs, a @frintz y a todos toda la comunidad linuxera que ha hecho posible este proyecto
