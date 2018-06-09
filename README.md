@@ -29,6 +29,7 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 * `Bash`
 * `MySQL 5.7 o superior`
 * `Python 3.5 o superior` (sólo para obtener información de las bases de datos)
+* `SQLAlchemy` Librería para python y bases de datos
 * `python-mysqldb` y `python3-mysqldb` (conectores que permiten que python3 interactúe con mysql)
 * `cryptsetup` (sólo para las opciones de cifrado)
 ### Agradecimientos
