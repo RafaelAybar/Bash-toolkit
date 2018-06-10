@@ -30,15 +30,14 @@ else
     echo "netmask $netmask" >> /etc/network/interfaces
     echo "network $red" >> /etc/network/interfaces
     echo "gateway $puerta" >> /etc/network/interfaces
-    echo "dns-nameservers $dnsname" >> /etc/network/interfaces
+    echo "dns-nameservers $search" >> /etc/network/interfaces
 		else
 			sed -i 's/dhcp/static/g' /etc/network/interfaces
 			echo "address $ip" >> /etc/network/interfaces
 			echo "netmask $netmask" >> /etc/network/interfaces
 			echo "network $red" >> /etc/network/interfaces
 			echo "gateway $puerta" >> /etc/network/interfaces
-			echo "dns-nameservers $dnsname" >> /etc/network/interfaces
-			echo "dns-search $search" >> /etc/network/interfaces
+			echo "dns-nameservers $search" >> /etc/network/interfaces
 	fi
 
     echo "Configuración acabada"
