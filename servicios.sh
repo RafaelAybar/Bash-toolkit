@@ -118,9 +118,11 @@ EOF
                                                 #optenemos la ip
                                                 echo "introduce la ip"
                                                 read ip
-                                                if [ -z $ip ]
+                                                echo "introduce el ultimo número de la dirección ip introducida anteriormente"
+                                                read digitip
+                                                if [ -z "$ip" ] ||  [ -z "$digitip" ]
                                                     then
-                                                        echo "Es oligatorio introducir la ip"
+                                                        echo "Es oligatorio introducir la ip y el último dígito"
                                                         exit
                                                 fi
                                                 #añadimos la ip
@@ -130,7 +132,7 @@ EOF
                                                 echo "Realizamos la misma tarea con la zona inversa"
                                                 sed -i "s/root.localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
                                                 sed -i "s/localhost/$nombredom/" /etc/bind/db.$ipinversa.rev
-                                                sed -i "s/1.0.0/$ipinversa/" /etc/bind/db.$ipinversa.rev
+                                                sed -i "s/1.0.0/$digitip/" /etc/bind/db.$ipinversa.rev
                                                 cat /etc/bind/db.$ipinversa.rev
                                 else
                                     echo "Introduce un tipo de zona válido"
