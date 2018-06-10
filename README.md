@@ -18,9 +18,9 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 -    Configuración de tarjetas de red:
  
         NOTA: El script configurará la tarjeta de red principal y deberá ejecutarse de la siguiente manera, siguiendo el orden de los parámetros de forma rigurosa:
-        ./configred.sh nombre-de-la-tarjeta-de-red red ip-de-la-máquina puerta-de-enlace máscara servidores-dns dominio
+        ./configred.sh nombre-de-la-tarjeta-de-red red ip-de-la-máquina puerta-de-enlace máscara servidores-dns
         Ejemplo:
-        ./configred.sh enp0s3 192.168.209.0 192.168.209.45 192.168.209.1 255.255.255.0
+        ./configred.sh enp0s3 192.168.209.0 192.168.209.45 192.168.209.1 255.255.255.0 8.8.8.8
 
 -   Servicios DNS, DHCP, dominio Samba y unión de clientes Linux (Ubuntu)
 
