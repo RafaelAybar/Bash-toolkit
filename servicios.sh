@@ -69,7 +69,7 @@ EOF
                         echo "};" >> /etc/bind/named.conf.local
                         cat /etc/bind/named.conf.local
                         echo "Se va a proceder a configurar la zona inversa"
-                        echo "Introduzca la ip de esta forma: 1.168.192"
+                        echo "Introduzca la ip de esta forma: 10.1.168.192"
                         read ipinversa
                         if [ -z ipinversa ]
                         then
