@@ -11,10 +11,9 @@ echo "7º dominio"
     	ip=$3
 	puerta=$4
 	netmask=$5
-	dnsname=$6
-	search=$7
+	search=$6
  # El parámetro -z comprueba si la variable está vacía y -n si está completa
-if [ -z  $interfaz ] || [ -z $red ] || [ -z $ip ] || [ -z $netmask ] || [ -z $dnsname ] || [ -z "$search" ] || [ -z $puerta ]
+if [ -z  $interfaz ] || [ -z $red ] || [ -z $ip ] || [ -z $netmask ] || [ -z "$search" ] || [ -z $puerta ]
     then
         echo "Debes introducir todos los parámetros"
         exit
@@ -32,7 +31,6 @@ else
     echo "network $red" >> /etc/network/interfaces
     echo "gateway $puerta" >> /etc/network/interfaces
     echo "dns-nameservers $dnsname" >> /etc/network/interfaces
-    echo "dns-search $search" >> /etc/network/interfaces
 		else
 			sed -i 's/dhcp/static/g' /etc/network/interfaces
 			echo "address $ip" >> /etc/network/interfaces
