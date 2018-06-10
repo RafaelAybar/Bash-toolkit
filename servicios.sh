@@ -15,7 +15,7 @@ EOF
         1) echo "Instalaremos Apache2, MySQL y PHP"
             #https://www.digitalocean.com/community/tutorials/como-instalar-linux-apache-mysql-php-lamp-en-ubuntu-16-04-es
             echo  "La ruta por defecto donde se alojan las páginas web es /var/www/html"
-            sudo apt install php libapache2-mod-php php-mcrypt php-mysqg php-gettext mysql-server mysql-client libmysqlclient-dev;
+            sudo apt install php libapache2-mod-php php-mcrypt php-mysql php-gettext mysql-server mysql-client libmysqlclient-dev;
             echo "Comprobamos que los paquetes se han instsalado correctamente"
             sudo apache2ctl configtest
             sleep 4
