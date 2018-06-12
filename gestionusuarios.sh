@@ -29,8 +29,8 @@ EOF
                                         read numdia
                                         if [ -z "$numdia" ]
                                             then
-                                            passwd $nombre
-                                            chage -M $numdia $nombre
+                                            sudo passwd $nombre
+                                            sudo chage -M $numdia $nombre
                                         fi
                                 fi
                             else
@@ -42,7 +42,7 @@ EOF
                     read nomb
                         if [ -n "$nomb" ] 
                             then
-                            userdel "$nomb"
+                            sudo userdel "$nomb"
                         else
                             echo "Introduce un valor válido"
                         fi
@@ -62,7 +62,7 @@ EOF
                                 read nombreg
                                 if [ -n "$nombreg" ] 
                                 then
-                                    groupdel $nombreg
+                                    sudo groupdel $nombreg
                                 else
                                     echo "Debes introducir algo"
                                 fi
@@ -78,7 +78,7 @@ EOF
             read ngrup
             if [ -z "$ngrup" ] 
             then
-                usermod -a -G $ngrup $usu
+                sudo usermod -a -G $ngrup $usu
             fi
         fi;;
     4) echo "Introduce el nuevo propietario "
@@ -89,7 +89,7 @@ EOF
             read directorio
             if [  -d "$directorio" ] || [ -f "$directorio" ]
                 then
-                    chown -R "$nuevoprop" "$directorio"
+                   sudo chown -R "$nuevoprop" "$directorio"
             fi
         else
             echo "Introduce un valor válido"
@@ -112,7 +112,7 @@ EOF
                             sudo cat /etc/passwd | grep $nombreus
                     elif [ "$usuc" = "n" ] 
                         then
-                            cat /etc/passwd
+                            sudo cat /etc/passwd
                     fi
             fi
     ;;
