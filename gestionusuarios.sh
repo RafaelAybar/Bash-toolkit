@@ -29,7 +29,8 @@ EOF
                                         read numdia
                                         if [ -z "$numdia" ]
                                             then
-                                            passwd $nombre                                       
+                                            passwd $nombre
+                                            chage -M $numdia $nombre
                                         fi
                                 fi
                             else
