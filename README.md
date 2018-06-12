@@ -1,6 +1,6 @@
 # Bash-toolkit
 ## Proyecto realizado por Rafael Aybar Segura, curso 2017-2018, IES AL-ANDALUS
-Este proyecto es un conjunto de herramientas para sysadmin para servidores con sistema opertativo Ubuntu server 16.04 o superior con las siguientes funcionalidades
+Este proyecto es un conjunto de herramientas para sysadmin para servidores con sistema operativo Ubuntu server 16.04 o superior con las siguientes funcionalidades
 
 -    Copias de seguridad y automatización de tareas.
 -    Obtención de información de base de datos MySQL.
