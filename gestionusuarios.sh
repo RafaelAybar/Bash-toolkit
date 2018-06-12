@@ -14,7 +14,7 @@ EOF
   case $respuesta in
     1) echo "Pulsa a para añadir un usuario, y d para borrarlo"
         read respu
-            if [ $respu = "a" ] 
+            if [ "$respu" = "a" ] 
                 then
                     echo "Introduce el nombre del usuaruio"
                     read nombre
@@ -27,12 +27,10 @@ EOF
                                     then
                                         echo "Introduce el número de días"
                                         read numdia
-                                        if [[ $numdia =~ ^-?[0-9]+$ ]]
+                                        if [ -z "$numdia" ]
                                             then
-                                            passwd -e -w $numdia "$nombre"
-                                        elif [ -z $numdia ]
-                                            then
-                                            passwd $nombre                                       
+                                            passwd $nombre
+                                            chage -M $numdia $nombre
                                         fi
                                 fi
                             else
@@ -51,14 +49,14 @@ EOF
               fi;;
     2) echo "Pulsa 1 para crear un grupo, pulsa 2 para eliminarlo"
         read r1
-        if [ $r1 == 1 ]
+        if [ $r1 = 1 ]
             then
                 echo "Introduce el nombre del grupo"
                 read nombre
                 if [ -n "$nombre" ] 
                 then
                     groupadd $nombre
-                 elif [ $r1 == 2 ] 
+                 elif [ $r1 = 2 ] 
                     then
                         echo "Introduce el nombre del grupo"
                                 read nombreg
@@ -100,19 +98,19 @@ EOF
 
     5) echo "Pulsa 1 para ver quin está conectado, 2 para ver la lista de usuarios"
         read rnum
-            if [ $rnum == 1 ] 
+            if [ $rnum = 1 ] 
                 then
                     who
-            elif [ $rnum == 2 ] 
+            elif [ $rnum = 2 ] 
                 then
                     echo "¿Quieres un usuario concreto s/n"
                     read usuc
-                    if [ $usuc == s ]
+                    if [ "$usuc" = "s" ]
                         then
                             echo "Introduce el nombre"
                             read nombreus
-                            cat /etc/passwd | grep $nombreus
-                    elif [ $usuc == n ] 
+                            sudo cat /etc/passwd | grep $nombreus
+                    elif [ "$usuc" = "n" ] 
                         then
                             cat /etc/passwd
                     fi
@@ -120,6 +118,6 @@ EOF
     ;;
     6) echo "Hasta luego"
         exit;;
-    *) echo "Debes escoger una opción válida.";;
+    *) echo "Debes escoger una opción válida";;
 esac
 done
