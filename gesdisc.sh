@@ -69,20 +69,18 @@ EOF
                 fi
             fi
         ;;
-        3) echo "Introduce la partición que deseas formatear"
-        read partaformat
-        if [ -z "$partaformat" ]
+        3) echo "Introduce el disco o partición que quieres respaldar"
+        read discoresp
+        if [ -z "$discoresp" ]
             then
-                echo "Debes introducir la partición"
+                echo "Debes introducir la partición/disco"
+            exit
+        else
+            sudo cryptsetup luksDump $discoresp
+            echo "Se ha generado una copia de las cabezeras en"
+            pwd
+            exit
         fi
-        echo "Introduce el formato que quieres darle"
-        read formatopart
-        if [ -z "$formatopart" ]
-            then
-                echo "Debes introducir el formato"
-                exit
-        fi
-        mkfs.$formatopart $partaformat
         ;;
         4)
         echo "Borrar una partición implica borrar todos los datos, desea continuar (pulsa s)"
