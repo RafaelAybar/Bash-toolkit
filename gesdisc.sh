@@ -17,7 +17,7 @@ EOF
     case $respuesta in
         1) echo "Listado de discos duros y particiones del sistema:"
             #Fuente: https://blog.desdelinux.net/4-comandos-para-conocer-datos-de-nuestros-hdd-o-particiones/
-            
+            lsblk -fm
            ;;
         2) echo "Introduzca la partición o disco que cifrará";
             read candidato
