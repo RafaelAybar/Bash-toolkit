@@ -77,7 +77,7 @@ EOF
             exit
         else
             sudo cryptsetup luksDump $discoresp
-            echo "Se ha generado una copia de las cabezeras en"
+            echo "Se ha generado una copia de las cabeceras en"
             pwd
             exit
         fi
