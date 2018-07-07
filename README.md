@@ -34,4 +34,4 @@ Este proyecto es un conjunto de herramientas para sysadmin para servidores con s
 * `cryptsetup` (sólo para las opciones de cifrado)
 ### Agradecimientos
 * A todos los profesores del IES Al-Andalus
-* A @almuhs, a @frintz y a toda la comunidad linuxera que ha hecho posible este proyecto
+* A @almuhs, a @fryntiz y a toda la comunidad linuxera que ha hecho posible este proyecto
