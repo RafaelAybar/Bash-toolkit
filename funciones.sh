@@ -29,3 +29,14 @@ pideInformacion() {
     done
     INFO="$dato"
 }
+
+
+# Funcion que muestra datos en forma de menu
+# Recibe la referencia de una lista con las opciones de la forma:
+# mostrarComoMenu OPCIONES[@]
+mostrarComoMenu() {
+    declare -a OPS=("${!1}")
+    for ((i = 0; i < ${#OPS[@]}; ++i)); do
+        echo "$(($i + 1))) ${OPS[$i]}"
+    done
+}
