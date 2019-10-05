@@ -1,33 +1,34 @@
 #!/bin/bash
-while true
-do
-  cat <<-EOF
-BASH TOOLKIT PARA SYSADMIN (EJECUTAR COMO ADMINISTRADOR)
-1 Gestión de usuarios y grupos.
-2 Copias de seguridad y automaticación de tareas.
-3 Gestión de discos.
-4 Instalación de isos en pendrive.
-5 Análisis de bases de datos
-6 Instalación de servicios
-7 Monitorización de procesos.
-8 Instalación de Samba
-9 Salir
-EOF
-echo "La configuración de red no se realiza en este menú"
-  read respuesta
 
-  case $respuesta in
-	1) sh gestionusuarios.sh;;
-	2) sh copiaseg.sh;;
-	3) sh gestdisc.sh;;
-	4) sh isos.sh;;
-	5) python3 infobd.py;;
-	6) sh servicios.sh;;
-	7) sh gestionprocesos.sh;;
-	8) sh installsamba.sh
-		;;
-	9) echo "Hasta luego"
-        exit;;
-    *) echo "Introduce una opción válida"
-  esac
+source funciones.sh
+
+compruebaRoot
+
+OPCIONES=(
+	"Gestión de usuarios y grupos."
+	"Copias de seguridad y automaticación de tareas."
+	"Gestión de discos."
+	"Instalación de isos en pendrive."
+	"Análisis de bases de datos."
+	"Instalación de servicios."
+	"Monitorización de procesos."
+	"Instalación de Samba."
+	"Salir."
+)
+
+clear
+select OP in "${OPCIONES[@]}"; do
+	case "$OP" in
+		"${OPCIONES[0]}") sh gestionusuarios.sh ;;
+		"${OPCIONES[1]}") sh copiaseg.sh ;;
+		"${OPCIONES[2]}") sh gestdisc.sh ;;
+		"${OPCIONES[3]}") sh isos.sh ;;
+		"${OPCIONES[4]}") python3 infobd.py ;;
+		"${OPCIONES[5]}") sh servicios.sh ;;
+		"${OPCIONES[6]}") sh gestionprocesos.sh ;;
+		"${OPCIONES[7]}") sh installsamba.sh ;;
+		"${OPCIONES[8]}") echo "Hasta luego"; exit ;;
+
+		*) echo-r "Seleccione una opción válida"
+	esac
 done
