@@ -21,13 +21,13 @@ compruebaRoot() {
 
 # Funcion que pide informacion relativa a lo que reciba como parametro
 # La informacion recogida se almacena en $INFO
-INFO=''
+INFO_PEDIDA=''
 pideInformacion() {
     dato='';
     while [ -z "$dato" ]; do
         read -p "Introduce $1: " dato
     done
-    INFO="$dato"
+    INFO_PEDIDA="$dato"
 }
 
 
