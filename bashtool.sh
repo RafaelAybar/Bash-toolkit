@@ -17,6 +17,7 @@ OPCIONES=(
 )
 
 clear
+echo "== BASH TOOLKIT PARA SYSADMIN =="
 select OP in "${OPCIONES[@]}"; do
     case "$OP" in
         "${OPCIONES[0]}") sh gestionusuarios.sh ;;
