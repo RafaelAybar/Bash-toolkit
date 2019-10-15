@@ -24,10 +24,30 @@ compruebaRoot() {
 INFO_PEDIDA=''
 pideInformacion() {
     dato='';
-    while [ -z "$dato" ]; do
+    until [ -n "$dato" ]; do
         read -p "Introduce $1: " dato
     done
     INFO_PEDIDA="$dato"
+}
+
+
+# Funcion que colorea los datos delimitados por algun caracter de una
+# fichero
+imprimeColoreado() {
+    espacio="SpAcE"
+    coloreado=""
+    delimitador="$3"
+
+    for linea in `cat "$1" | sed s/' '/"$espacio"/g`; do
+        codigoDeColor=30
+        for i in `echo "$linea" | sed s/"$2"/' '/g`; do
+            codigoDeColor=$(($codigoDeColor+1))
+            coloreado="$coloreado\e[${codigoDeColor}m$i\e[m "
+        done
+        coloreado="${coloreado::-1}\n"
+    done
+
+    echo -e "$coloreado" | sed s/' '/':'/g | sed s/"$espacio"/' '/g
 }
 
 
@@ -35,7 +55,7 @@ pideInformacion() {
 # Recibe la referencia de una lista con las opciones de la forma:
 # mostrarComoMenu OPCIONES[@]
 mostrarComoMenu() {
-    declare -a OPS=("${!1}")
+    OPS=("${!1}")
     for ((i = 0; i < ${#OPS[@]}; ++i)); do
         echo "$(($i + 1))) ${OPS[$i]}"
     done
