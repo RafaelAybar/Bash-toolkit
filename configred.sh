@@ -5,11 +5,11 @@ source funciones.sh
 compruebaRoot
 
 if [ $# -ne 6 ]; then
-	echo-r "[AVISO] Este script espera 6 argumentos"
-	echo "{ interfaz dirRed ip puerta netMask dns }"
-	echo "Ejemplo de uso:"
-	echo " $0 eth0 192.168.1.0 192.168.1.13 192.168.1.1 255.255.255.0 '9.9.9.9 8.8.8.8'"
-	exit
+    echo-r "[AVISO] Este script espera 6 argumentos"
+    echo "{ interfaz dirRed ip puerta netMask dns }"
+    echo "Ejemplo de uso:"
+    echo " $0 eth0 192.168.1.0 192.168.1.13 192.168.1.1 255.255.255.0 '9.9.9.9 8.8.8.8'"
+    exit
 fi
 
 interfaz=$1
