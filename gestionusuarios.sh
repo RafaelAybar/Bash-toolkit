@@ -1,123 +1,156 @@
 #!/bin/bash
-while true
-do
-  cat <<-EOF
-MENÚ DEL GESTIÓN de usuarios y grupos
-1 Añadir/eliminar usuarios y gestión de contraseñas
-2 Crear/eliminar grupos.
-3 Modificar el grupo al que pertenece un usuario.
-4 Cambiar el propietario de un archivo/directorio.
-5 Comprobar qué usuarios existen y cuáles están conectados
-6 Salir
-EOF
-  read respuesta
-  case $respuesta in
-    1) echo "Pulsa a para añadir un usuario, y d para borrarlo"
-        read respu
-            if [ "$respu" = "a" ] 
-                then
-                    echo "Introduce el nombre del usuaruio"
-                    read nombre
-                        if [ -n "$nombre" ]
-                            then
-                                adduser "$nombre"
-                                echo "Introduce 1 para definir la caducidad en días de la contraseña"
-                                        read r1
-                                if [ -n "$r1" ]
-                                    then
-                                        echo "Introduce el número de días"
-                                        read numdia
-                                        if [ -z "$numdia" ]
-                                            then
-                                            sudo passwd $nombre
-                                            sudo chage -M $numdia $nombre
-                                        fi
-                                fi
-                            else
-                                echo "Introduce un nombre válido"
-                            fi
-            elif [ $respu = "d" ] 
-                then
-                    echo "Introduce el nombre"
-                    read nomb
-                        if [ -n "$nomb" ] 
-                            then
-                            sudo userdel "$nomb"
-                        else
-                            echo "Introduce un valor válido"
-                        fi
-              fi;;
-    2) echo "Pulsa 1 para crear un grupo, pulsa 2 para eliminarlo"
-        read r1
-        if [ $r1 = 1 ]
-            then
-                echo "Introduce el nombre del grupo"
-                read nombre
-                if [ -n "$nombre" ] 
-                then
-                    groupadd $nombre
-                 elif [ $r1 = 2 ] 
-                    then
-                        echo "Introduce el nombre del grupo"
-                                read nombreg
-                                if [ -n "$nombreg" ] 
-                                then
-                                    sudo groupdel $nombreg
-                                else
-                                    echo "Debes introducir algo"
-                                fi
-                            else
-                                echo "Debes introducir algo"
-                fi
-        fi;;
-    3) echo "Introduce el  nombre del usuario"
-        read usu
-        if [ -n "$usu" ] 
-        then
-            echo "Ahora el nombre del grupo"
-            read ngrup
-            if [ -z "$ngrup" ] 
-            then
-                sudo usermod -a -G $ngrup $usu
-            fi
-        fi;;
-    4) echo "Introduce el nuevo propietario "
-        read nuevoprop
-        if [ -n "$nuevoprop" ]
-        then
-            echo "Ahora el directorio (recursivo)/fichero"
-            read directorio
-            if [  -d "$directorio" ] || [ -f "$directorio" ]
-                then
-                   sudo chown -R "$nuevoprop" "$directorio"
-            fi
-        else
-            echo "Introduce un valor válido"
-        fi
-        ;;
 
-    5) echo "Pulsa 1 para ver quin está conectado, 2 para ver la lista de usuarios"
-        read rnum
-            if [ $rnum = 1 ] 
-                then
-                    who
-            elif [ $rnum = 2 ] 
-                then
-                    echo "¿Quieres un usuario concreto s/n"
-                    read usuc
-                    if [ "$usuc" = "s" ]
-                        then
-                            echo "Introduce el nombre"
-                            read nombreus
-                            sudo cat /etc/passwd | grep $nombreus
-                    elif [ "$usuc" = "n" ] 
-                        then
-                            sudo cat /etc/passwd
-                    fi
-            fi
-    ;;
-    6) echo "Hasta luego"
-        exit;;
-    *) echo "Debes escoger una opción válida";;
-esac
-done
+source funciones.sh
+
+compruebaRoot
+
+OPCIONES=(
+    "Añadir/eliminar usuarios y gestión de contraseñas."
+    "Crear/eliminar grupos."
+    "Modificar el grupo al que pertenece un usuario."
+    "Cambiar el propietario de un archivo/directorio."
+    "Comprobar qué usuarios existen y cuáles están conectados."
+    "Salir."
+)
+
+aniadirUsuario() {
+    usuario=$1
+
+    if adduser $usuario; then
+        read -p "¿Quieres definir la caducidad de la contraseña? [s/N]" res
+        if [[ "$res" =~ ^[Ss]$ ]]; then
+            numDias="NOPE"
+            until [[ "$numDias" =~ ^[0-9]+$ ]]; do
+                read -p "Introduce el numero de días: " numDias
+            done
+            chage -M $numDias $usuario
+        fi
+        echo-v "El usuario '$usuario' se ha creado correctemente"
+    else
+        echo-r "No se ha podido crear el usuario '$usuario'"
+    fi
+}
+borrarUsuario() {
+    usuario=$1
+
+    homeDir=`grep $usuario /etc/passwd | cut -d':' -f6`
+    if userdel $usuario; then
+        mensaje="Se ha eliminado correctamente el usuario '$usuario'";
+        read -p "¿Quieres borrar el directorio del usuario? [s/N]" res
+        if [[ "$res" =~ ^[Ss]$ ]]; then
+            rm -rf $homeDir
+            mensaje="$mensaje y su directorio personal"
+        fi
+        echo-v "$mensaje"
+    else
+        echo-r "No se ha podido eliminar el usuario '$usuario'"
+    fi
+}
+aniadirGrupo() {
+    grupo=$1
+
+    if groupadd $grupo 2> /dev/null; then
+        echo-v "El grupo '$grupo' se ha creado correctamente"
+    else
+        echo-r "No se ha podido crear el grupo '$grupo'"
+    fi
+}
+borrarGrupo() {
+    grupo=$1
+
+    if groupdel $grupo 2> /dev/null; then
+        echo-v "El grupo '$grupo' se ha eliminado correctamente"
+    else
+        echo-r "No se ha podido eliminar el grupo '$grupo'"
+    fi
+}
+modificarGrupoDe() {
+    pideInformacion "nombre de grupo"
+    usuario=$1
+    grupo=$INFO_PEDIDA
+
+    if usermod -aG $grupo $usuario 2> /dev/null; then
+        echo-v "Se ha agregado correctamente '$usuario' al grupo '$grupo'"
+    else
+        echo-r "No se ha podido agregar '$usuario' al grupo '$grupo'"
+    fi
+}
+cambiarOwner() {
+    pideInformacion "nombre de directorio o fichero"
+    nuevoPropietario=$1
+    fichero="$INFO_PEDIDA"
+
+    if [ -e "$fichero" ]; then
+        chown -R $nuevoPropietario "$fichero"
+        echo-v "Se ha asignado correctamente el usuario '$usuario' como"
+        echo-v "nuevo propietario de '$fichero'"
+    else
+        echo-r "El fichero '$fichero' no se encuentra"
+        echo-r "Por favor indique una ruta relativa/absotuta hacia el"
+    fi
+}
+listarUsuarios() {
+    echo "- Todos los usuarios:"
+    imprimeColoreado /etc/passwd ':'
+    echo "- Usuarios conectados:"
+    echo-v "$(who)"
+}
+
+mostrarMenu() {
+    echo -e "\n== MENÚ DEL GESTIÓN de usuarios y grupos =="
+    select OP in "${OPCIONES[@]}"; do
+        case "$OP" in
+            "${OPCIONES[0]}")
+                echo -e "\nIntroduce A para añadir un usuario, y D para borrarlo"
+                read -p "#? " res
+                if [[ "$res" =~ ^[Aa]$ ]]; then
+                    pideInformacion "nombre de usuario"
+                    aniadirUsuario $INFO_PEDIDA
+                elif [[ "$res" =~ ^[Dd]$ ]]; then
+                    pideInformacion "nombre de usuario"
+                    borrarUsuario $INFO_PEDIDA
+                else
+                    echo-r "'$res' no es una opción válida"
+                fi
+                mostrarMenu
+            ;;
+            "${OPCIONES[1]}")
+                echo -e  "\nIntroduce A para añadir un grupo, y D para borrarlo"
+                read -p "#? " res
+                if [[ "$res" =~ ^[Aa]$ ]]; then
+                    pideInformacion "nombre de grupo"
+                    aniadirGrupo $INFO_PEDIDA
+                elif [[ "$res" =~ ^[Dd]$ ]]; then
+                    pideInformacion "nombre de grupo"
+                    borrarGrupo $INFO_PEDIDA
+                else
+                    echo-r "'$res' no es una opción válida"
+                fi
+                mostrarMenu
+            ;;
+            "${OPCIONES[2]}")
+                echo
+                pideInformacion "nombre de usuario"
+                modificarGrupoDe $INFO_PEDIDA
+                mostrarMenu
+            ;;
+            "${OPCIONES[3]}")
+                echo
+                pideInformacion "nuevo propietario"
+                cambiarOwner $INFO_PEDIDA
+                mostrarMenu
+            ;;
+            "${OPCIONES[4]}")
+                echo
+                listarUsuarios
+                mostrarMenu
+            ;;
+            "${OPCIONES[5]}") echo -e "\nHasta luego"; exit ;;
+
+            *) echo-r "Seleccione una opción válida"
+        esac
+    done
+}
+
+clear
+mostrarMenu
