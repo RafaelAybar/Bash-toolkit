@@ -1,47 +1,66 @@
 #!/bin/bash
+
+source funciones.sh
+
+compruebaRoot
+
+if [ $# -ne 6 ]; then
+    echo-r "[AVISO] Este script espera 6 argumentos"
+    echo "{ interfaz dirRed ip puerta netMask dns }"
+    echo "Ejemplo de uso:"
+    echo " $0 eth0 192.168.1.0 192.168.1.13 192.168.1.1 255.255.255.0 '9.9.9.9 8.8.8.8'"
+    exit
+fi
+
+interfaz=$1
+red=$2
+ip=$3
+puerta=$4
+netmask=$5
+dns=$6
+
 echo "Bienvenido al configurador de red automático"
 echo "Las interfaces detectadas son las siguientes"
-ip a | grep "en" | awk -F: '{ print $2 }'
-echo ""
-echo "Los datos se han introducido en el siguiente orden:"
-echo "1º interfaz, 2º red, 3º IP de la máquina, 4º puerta de enlace, 5º máscara 6º servdores DNS"
-	interfaz=$1
-	red=$2
-    	ip=$3
-	puerta=$4
-	netmask=$5
-	search=$6
- # El parámetro -z comprueba si la variable está vacía y -n si está completa
-if [ -z  $interfaz ] || [ -z $red ] || [ -z $ip ] || [ -z $netmask ] || [ -z "$search" ] || [ -z $puerta ]
-    then
-        echo "Debes introducir todos los parámetros"
-        exit
-else
-    echo "Hacemos copia de seguirdad (el fichero será interfaces2)"
-            cp /etc/network/interfaces /etc/network/interfaces2
-	#Comprobamos si la interfaz introducida ya existe en el fichero, para no duplicarla
-	interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
-	if [ $interfichero != $interfaz ]
-		then
-    echo "auto $interfaz" >> /etc/network/interfaces
-    echo "iface $interfaz inet static" >> /etc/network/interfaces
-    echo "address $ip" >> /etc/network/interfaces
-    echo "netmask $netmask" >> /etc/network/interfaces
-    echo "network $red" >> /etc/network/interfaces
-    echo "gateway $puerta" >> /etc/network/interfaces
-    echo "dns-nameservers $search" >> /etc/network/interfaces
-		else
-			sed -i 's/dhcp/static/g' /etc/network/interfaces
-			echo "address $ip" >> /etc/network/interfaces
-			echo "netmask $netmask" >> /etc/network/interfaces
-			echo "network $red" >> /etc/network/interfaces
-			echo "gateway $puerta" >> /etc/network/interfaces
-			echo "dns-nameservers $search" >> /etc/network/interfaces
-	fi
+ip a | grep "^[0-9]:" | awk -F: '{ print $2 }'
 
-    echo "Configuración acabada"
-    echo "Recuerde modificar el los ficheros hosts y resolv.conf si fuera necesario"
-      service networking restart
-    echo "se ha reiniciado la tarjeta de red"
-        exit
- fi
+echo -e "\nLos datos introducidos son los siguientes:"
+echo " - Interfaz: $interfaz"
+echo " - Dirección de red: $red"
+echo " - IP de la máquina: $ip"
+echo " - Puerta de enlace: $puerta"
+echo " - Máscara: $netmask"
+echo " - Servdores DNS: $dns"
+echo
+
+read -p "La información es correcta?[S/n] " res
+[[ "$res" =~ [Nn] ]] && exit
+
+echo "Hacemos copia de seguirdad (el fichero será interfaces2)"
+cp /etc/network/interfaces /etc/network/interfaces2
+
+ficheroInterfaces="/etc/network/interfaces"
+interfichero=$(ip a | grep $interfaz | awk -F: '{ print $2 }')
+# Comprobamos si la interfaz introducida ya existe en el fichero, para no duplicarla
+if ! [[ "$interfichero" =~ $interfaz ]]; then
+    echo "auto $interfaz" >> $ficheroInterfaces
+    echo "iface $interfaz inet static" >> $ficheroInterfaces
+    echo "address $ip" >> $ficheroInterfaces
+    echo "netmask $netmask" >> $ficheroInterfaces
+    echo "network $red" >> $ficheroInterfaces
+    echo "gateway $puerta" >> $ficheroInterfaces
+    echo "dns-nameservers $dns" >> $ficheroInterfaces
+else
+    sed -i 's/dhcp/static/g' $ficheroInterfaces
+    echo "address $ip" >> $ficheroInterfaces
+    echo "netmask $netmask" >> $ficheroInterfaces
+    echo "network $red" >> $ficheroInterfaces
+    echo "gateway $puerta" >> $ficheroInterfaces
+    echo "dns-nameservers $dns" >> $ficheroInterfaces
+fi
+
+echo "Configuración acabada"
+echo "Recuerde modificar el los ficheros hosts y resolv.conf si fuera necesario"
+
+if service networking restart; then
+	echo "se ha reiniciado la tarjeta de red"
+fi
